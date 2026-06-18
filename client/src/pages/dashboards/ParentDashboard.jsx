@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, Users, FileText, ChevronRight, Search, Building2, Heart, Bot, Shield, CheckCircle } from 'lucide-react';
+import { Activity, Users, FileText, ChevronRight, Search, Building2, Heart, Bot, Shield, CheckCircle, Sparkles } from 'lucide-react';
 import { ResponsiveContainer, RadialBarChart, RadialBar } from 'recharts';
 
 const ParentDashboard = () => {
