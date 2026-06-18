@@ -24,7 +24,8 @@ const Chatbot = () => {
       setMessages((prev) => [...prev, { role: 'assistant', text: response.data.reply }]);
     } catch (error) {
       console.error(error);
-      setMessages((prev) => [...prev, { role: 'assistant', text: 'Sorry, I am having trouble connecting to my servers right now.' }]);
+      const errorMessage = error.response?.data?.reply || 'Sorry, I am having trouble connecting to my servers right now.';
+      setMessages((prev) => [...prev, { role: 'assistant', text: errorMessage }]);
     } finally {
       setIsLoading(false);
     }
