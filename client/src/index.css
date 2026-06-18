@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background-light text-slate-900 font-sans antialiased;
+  }
+}
+  
+.goog-te-banner-frame { display: none !important; }  
+body { top: 0 !important; } 
