@@ -1,6 +1,7 @@
 const { GoogleGenAI } = require('@google/genai');
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+console.log("AI Controller initialized with key ending in:", process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.slice(-5) : 'UNDEFINED');
 
 // Feature 1: AI Counselor Chat
 const counselorChat = async (req, res) => {
@@ -8,7 +9,7 @@ const counselorChat = async (req, res) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-1.5-flash',
       contents: [
         {
           role: 'user',
@@ -21,10 +22,9 @@ const counselorChat = async (req, res) => {
   } catch (error) {
     console.error('AI Counselor Error:', error.message);
     
-    // The user explicitly requested to fetch from Gemini API and not use a mock.
-    // If it fails (e.g. invalid API key provided in .env), we must return the actual error.
+    // If it fails (e.g. 503 high demand, or 401 invalid key), we must return the actual error.
     res.status(500).json({ 
-      reply: `Gemini API Error: ${error.message}. Please ensure you have provided a valid Gemini API Key (starting with AIzaSy) in the .env file. The current key provided is unauthorized.` 
+      reply: `Gemini API Error: ${error.message}` 
     });
   }
 };
@@ -45,7 +45,7 @@ const assessReadiness = async (req, res) => {
     Questionnaire Data: ${JSON.stringify(questionnaire)}`;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-1.5-flash',
       contents: prompt,
       config: {
         responseMimeType: "application/json",
