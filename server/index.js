@@ -21,9 +21,22 @@ app.use('/api/auth', require('./routes/authRoutes'));
 // app.use('/api/children', require('./routes/childRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
 
-app.get('/', (req, res) => {
-  res.send('aasara AI API is running...');
-});
+const path = require('path');
+
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'client', 'dist', 'index.html')
+    )
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('aasara AI API is running...');
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 
